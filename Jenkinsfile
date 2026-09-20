@@ -13,14 +13,19 @@ pipeline {
                 '''
             }
         }
-
-        stage('Test') {
+        stage('API Tests') {
             steps {
-                echo 'Запуск тестов...'
+                sh '''
+                     . venv/bin/activate
+                     pytest -m api --alluredir=allure-results
+                '''
+            }
+        }
+        stage('UI Tests') {
+            steps {
                 sh '''
                     . venv/bin/activate
-                    pytest test/ \
-                        --alluredir=allure-result
+                    pytest -m ui --alluredir=allure-results
                 '''
             }
         }

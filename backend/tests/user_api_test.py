@@ -1,11 +1,13 @@
 import pytest
 
 
+@pytest.mark.api
 def test_get_users(user_client):
     result = user_client.get_users()
     assert len(result) == 10
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('user_id, user_name, password',
                          [(4, 'User 4', 'Password4'),
                           (6, 'User 6', 'Password6')])
@@ -16,6 +18,7 @@ def test_get_user_by_id(user_client, user_id, user_name, password):
     assert result['password'] == password
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('user_id, user_name, password',
                          [(12, 'Pipker', 'asdQWEfg56'),
                           (34, 'somebody', 'WQE435!@fd')])
@@ -26,6 +29,7 @@ def test_create_user(user_client, user_id, user_name, password):
     assert result.get('password') == password
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('user_id, user_name, password',
                          [(4, 'Mr.D', '^&sdfew32'),
                           (7, 'Ms.G', '&^*dfgqw1')])
@@ -36,6 +40,7 @@ def test_change_user(user_client, user_id, user_name, password):
     assert result.get('password') == password
 
 
+@pytest.mark.api
 @pytest.mark.parametrize('user_id', [4, 8])
 def test_delete_user(user_client, user_id):
     result = user_client.delete_user(user_id)
