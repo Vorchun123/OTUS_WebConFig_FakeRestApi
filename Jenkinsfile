@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+    stages {
         stage('Setup') {
             steps {
                 echo 'Установка зависимостей...'
@@ -33,7 +34,7 @@ pipeline {
                 '''
             }
         }
-
+    }
 
     post {
         always {
