@@ -1,14 +1,6 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                echo 'Клонирование репозитория...'
-                checkout scm
-            }
-        }
-
         stage('Setup') {
             steps {
                 echo 'Установка зависимостей...'
@@ -16,6 +8,7 @@ pipeline {
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r requirements.txt
+                    pip install pytest pytest-cov allure-pytest flake8
                 '''
             }
         }
@@ -26,11 +19,7 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     pytest tests/ \
-                        --junitxml=reports/junit.xml \
-                        --html=reports/report.html \
-                        --cov=src \
-                        --cov-report=xml:reports/coverage.xml \
-                        --cov-report=html:reports/htmlcov
+                        --alluredir=allure-result
                 '''
             }
         }
@@ -46,18 +35,13 @@ pipeline {
         }
     }
 
-    post {
+     post {
         always {
-            echo 'Публикация отчетов...'
-            junit 'reports/junit.xml'
-            publishHTML(target: [
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'reports/htmlcov',
-                reportFiles: 'index.html',
-                reportName: 'Coverage Report'
-            ])
+            allure includeProperties: false,
+                   results: [[path: 'allure-results']]
+            recordIssues(
+                tools: [flake8(pattern: 'flake8.log')]
+            )
         }
         success {
             echo '✅ Сборка успешна!'
