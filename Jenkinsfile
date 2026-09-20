@@ -33,9 +33,9 @@ pipeline {
                 '''
             }
         }
-    }
 
-     post {
+
+    post {
         always {
             allure includeProperties: false,
                    results: [[path: 'allure-results']]
