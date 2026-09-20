@@ -19,7 +19,7 @@ pipeline {
                 echo 'Запуск тестов...'
                 sh '''
                     . venv/bin/activate
-                    pytest tests/ \
+                    pytest test/ \
                         --alluredir=allure-result
                 '''
             }
