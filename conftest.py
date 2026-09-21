@@ -66,7 +66,7 @@ def browser(request):
         raise ValueError(f'Браузер {browser_name} не поддерживается')
 
     browser.implicitly_wait(2)
-    browser.set_window_size(1680, 1050)
+    browser.set_window_size(1600, 900)
 
     browser.log_level = log_level
     browser.logger = logger

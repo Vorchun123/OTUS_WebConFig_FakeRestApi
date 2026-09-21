@@ -97,7 +97,8 @@ class BasePage:
 
     def scroll(self, *locator):
         self.local_log(f'Scroll to the {locator}')
-        self.browser.execute_script("arguments[0].scrollIntoView(true);", self.find_element(*locator))
+        self.browser.execute_script("arguments[0].scrollIntoView({block: 'center', behavior: 'instant'});",
+                                    self.find_element(*locator))
 
     def count_elements(self, *locator):
         self.local_log(f'Get count in {locator}')
