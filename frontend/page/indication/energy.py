@@ -55,7 +55,7 @@ class Energy(ConnectionPageElectricityMeter):
 
     @allure.step('Переходим на страницу "Энергия"')
     def load_page_url(self):
-        self.visit_page(f'http://localhost:5004/{self.get_meter_id()}/energy')
+        self.visit_page(f'http://host.docker.internal:5004/{self.get_meter_id()}/energy')
 
     @allure.step('Переходим на страницу "Энергия" через боковую панель')
     def load_page_sidebar(self):

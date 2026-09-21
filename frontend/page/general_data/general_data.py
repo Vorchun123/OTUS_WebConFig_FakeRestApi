@@ -35,7 +35,7 @@ class General(ConnectionPageElectricityMeter):
     SWITCHING_SCHEME = (By.ID, 'SwitchingScheme')
 
     def load_page_url(self):
-        self.visit_page(f'http://localhost:5004/{self.get_meter_id()}/general_data')
+        self.visit_page(f'http://host.docker.internal:5004/{self.get_meter_id()}/general_data')
 
     def refresh_page_and_wait_button(self):
         self.refresh()
