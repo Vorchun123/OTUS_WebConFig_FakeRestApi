@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
-                    pytest -m ui --alluredir=allure-results
+                    pytest -m ui --headless --alluredir=allure-results
                 '''
             }
         }
