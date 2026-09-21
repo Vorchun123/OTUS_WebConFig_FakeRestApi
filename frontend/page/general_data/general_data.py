@@ -56,31 +56,6 @@ class General(ConnectionPageElectricityMeter):
     def get_all_passport_data(self):
         return self.get_text(*self.ALL_PASSPORT_DATA)
 
-    @allure.step('Считываем общие данные с ПУ')
-    def general_data_gurux(self, com_port):
-        with allure.step(f'Подключаемся к ПУ с параметрами: com port - {com_port}, client address - {CLIENT_ADDRESS},'
-                         f' server address - {SERVER_ADDRESS}, password - {PASSWORD}'):
-            self.open_gurux(com_port, CLIENT_ADDRESS, SERVER_ADDRESS, PASSWORD)
-        obis_param = {'0.0.96.1.0.255': 'serial_number',
-                      '0.0.96.1.1.255': 'meter_type',
-                      '0.0.96.1.4.255': 'meter_release_date',
-                      '0.0.96.1.3.255': 'manufacturer',
-                      '0.0.96.1.2.255': 'ver_metrological_software',
-                      '1.1.0.2.0.255': 'metrological_insignificant_part',
-                      '0.0.96.1.8.255': 'software_version',
-                      '1.0.0.2.1.254': 'mi_version',
-                      '0.0.96.14.0.255': 'current_tariff',
-                      '1.0.0.2.8.255': 'checksum_metrological_software',
-                      '0.0.96.1.128.255': 'checksum_metrological_significant_software',
-                      '1.0.0.4.2.255': 'amperage_transformation_coefficient',
-                      '1.0.0.4.3.255': 'voltage_transformation_coefficient',
-                      '0.0.96.1.130.255': 'software_name',
-                      '0.0.96.1.6.255': 'SPODES_specification_version',
-                      '0.0.96.1.254.255': 'extended_SPODES_specification_version',
-                      '0.0.96.6.3.255': 'switching_scheme'
-                      }
-        return self.generating_data_for_comparison_gurux(obis_param, GXDLMSData, 2)
-
     @allure.step('Считываем показания энергии с WebConfig')
     def general_data_webconfig(self, for_what):
         ui_param = {self.SERIAL_NUMBER: 'serial_number',

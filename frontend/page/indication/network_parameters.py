@@ -58,27 +58,6 @@ class NetworkParameters(BasePage):
     def click_button_save_data(self):
         self.click(*self.BUTTON_SAVE_DATA)
 
-    @allure.step('Считываем параметры сети с ПУ')
-    def network_parameters_gurux(self, com_port):
-        with allure.step(f'Подключаемся к ПУ с параметрами: com port - {com_port}, client address - {CLIENT_ADDRESS},'
-                         f' server address - {SERVER_ADDRESS}, password - {PASSWORD}'):
-            self.open_gurux(com_port, CLIENT_ADDRESS, SERVER_ADDRESS, PASSWORD)
-        obis_parameters = {'1.0.11.7.0.255': 'current',
-                           '1.0.12.7.0.255': 'voltage',
-                           '1.0.1.7.0.255': 'active power',
-                           '1.0.3.7.0.255': 'reactive power',
-                           '1.0.9.7.0.255': 'full power',
-                           '1.0.13.7.0.255': 'coefficient power',
-                           '1.0.131.7.0.255': 'tangent',
-                           '1.0.81.7.4.255': 'in phase angles',
-                           '1.0.1.6.0.255': 'max active power',
-                           '1.0.91.7.0.255': 'neutral current',
-                           '1.0.91.7.131.255': 'differential current',
-                           '1.0.14.7.0.255': 'frequency',
-                           '0.0.96.9.0.255': 'temperature'
-                           }
-        return self.generating_data_for_comparison_gurux(obis_parameters, GXDLMSRegister, 2)
-
     @allure.step('Считываем параметры сети с WebConfig')
     def network_parameters_webconfig(self):
         ui_param = {self.PHASE_A_CURRENT: 'current',

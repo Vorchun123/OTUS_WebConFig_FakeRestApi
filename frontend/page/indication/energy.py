@@ -88,44 +88,6 @@ class Energy(ConnectionPageElectricityMeter):
             with allure.step(f'Кол-во тарифов = {self.count_elements(*self.TARIFF_TABLE) - 1}'):
                 print(f'\nКол-во тарифов = {self.count_elements(*self.TARIFF_TABLE) - 1}')
 
-    @allure.step('Считываем показания энергии с ПУ')
-    def tariff_table_gurux(self, com_port):
-        with allure.step(f'Подключаемся к ПУ с параметрами: com port - {com_port}, client address - {CLIENT_ADDRESS},'
-                         f' server address - {SERVER_ADDRESS}, password - {PASSWORD}'):
-            self.open_gurux(com_port, CLIENT_ADDRESS, SERVER_ADDRESS, PASSWORD)
-        obis_param = {
-            'ТарифT1': {'1.0.1.8.1.255': 'A+ (кВт⋅ч)', '1.0.2.8.1.255': 'A- (кВт⋅ч)', '1.0.3.8.1.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.1.255': 'R- (кВар⋅ч)'},
-            'ТарифT2': {'1.0.1.8.2.255': 'A+ (кВт⋅ч)', '1.0.2.8.2.255': 'A- (кВт⋅ч)', '1.0.3.8.2.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.2.255': 'R- (кВар⋅ч)'},
-            'ТарифT3': {'1.0.1.8.3.255': 'A+ (кВт⋅ч)', '1.0.2.8.3.255': 'A- (кВт⋅ч)', '1.0.3.8.3.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.3.255': 'R- (кВар⋅ч)'},
-            'ТарифT4': {'1.0.1.8.4.255': 'A+ (кВт⋅ч)', '1.0.2.8.4.255': 'A- (кВт⋅ч)', '1.0.3.8.4.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.4.255': 'R- (кВар⋅ч)'},
-            'ТарифT5': {'1.0.1.8.5.255': 'A+ (кВт⋅ч)', '1.0.2.8.5.255': 'A- (кВт⋅ч)', '1.0.3.8.5.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.5.255': 'R- (кВар⋅ч)'},
-            'ТарифT6': {'1.0.1.8.6.255': 'A+ (кВт⋅ч)', '1.0.2.8.6.255': 'A- (кВт⋅ч)', '1.0.3.8.6.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.6.255': 'R- (кВар⋅ч)'},
-            'ТарифT7': {'1.0.1.8.7.255': 'A+ (кВт⋅ч)', '1.0.2.8.7.255': 'A- (кВт⋅ч)', '1.0.3.8.7.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.7.255': 'R- (кВар⋅ч)'},
-            'ТарифT8': {'1.0.1.8.8.255': 'A+ (кВт⋅ч)', '1.0.2.8.8.255': 'A- (кВт⋅ч)', '1.0.3.8.8.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.8.255': 'R- (кВар⋅ч)'},
-            'ТарифΣT': {'1.0.1.8.0.255': 'A+ (кВт⋅ч)', '1.0.2.8.0.255': 'A- (кВт⋅ч)', '1.0.3.8.0.255': 'R+ (кВар⋅ч)',
-                        '1.0.4.8.0.255': 'R- (кВар⋅ч)'}
-            }
-        result = {}
-        try:
-            for tariff, keys in obis_param.items():
-                result[tariff] = {}
-                with allure.step(f'Формируем - {tariff}'):
-                    for obis_code, key in keys.items():
-                        with allure.step(f'Читаем OBIS-код - {obis_code}'):
-                            result[tariff][key] = self.read_data_gurux(GXDLMSRegister, obis_code, 2)
-        except NoSuchElementException:
-            print(f"OBIS-код {obis_code} отсутствует")
-            pass
-        return result
-
     @allure.step('Считываем показания энергии с WebConfig')
     def tariff_table_webconfig(self, for_what):
         ui_param = {'ТарифT1': {self.TARIFF_1_ACTIVE_IMPORT: 'A+ (кВт⋅ч)', self.TARIFF_1_ACTIVE_EXPORT: 'A- (кВт⋅ч)',
