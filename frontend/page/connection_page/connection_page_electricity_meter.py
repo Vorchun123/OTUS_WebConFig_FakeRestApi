@@ -6,7 +6,7 @@ import allure
 
 
 class ConnectionPageElectricityMeter(BasePage):
-    URL = 'http://host.docker.internal:5004/setting/connection'
+    URL = 'http://localhost:5004/setting/connection'
     TYPE_INTERFACE = (By.ID, 'connectionTypeSelector')
     PORT = (By.ID, 'connectionPortSelector')
     HOST = (By.ID, 'connectionHostForTcpIpInput')

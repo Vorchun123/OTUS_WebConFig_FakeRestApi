@@ -35,7 +35,7 @@ class NetworkParameters(BasePage):
 
     @allure.step('Переходим на страницу "Параметры сети"')
     def load_page_url(self):
-        self.visit_page(f'http://host.docker.internal:5004/{self.get_meter_id()}/network_settings')
+        self.visit_page(f'http://localhost:5004/{self.get_meter_id()}/network_settings')
 
     def serial_meter_number(self):
         return self.get_text(*self.SERIAL_NUMBER)
