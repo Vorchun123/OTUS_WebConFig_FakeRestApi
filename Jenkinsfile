@@ -5,9 +5,9 @@ pipeline {
         stage('Setup') {
             steps {
                 echo 'Установка зависимостей...'
-                sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
+                bat '''
+                    python -m venv venv
+                    call venv\\Scripts\\activate.bat
                     pip install -r requirements.txt
                     pip install pytest pytest-cov allure-pytest flake8
                 '''
@@ -15,16 +15,16 @@ pipeline {
         }
         stage('API Tests') {
             steps {
-                sh '''
-                     . venv/bin/activate
-                     pytest -m api --alluredir=allure-results
+                bat '''
+                    call venv\\Scripts\\activate.bat
+                    pytest -m api --alluredir=allure-results
                 '''
             }
         }
         stage('UI Tests') {
             steps {
-                sh '''
-                    . venv/bin/activate
+                bat '''
+                    call venv\\Scripts\\activate.bat
                     pytest -m ui --headless --alluredir=allure-results
                 '''
             }
@@ -33,9 +33,9 @@ pipeline {
         stage('Lint') {
             steps {
                 echo 'Проверка качества кода...'
-                sh '''
-                    . venv/bin/activate
-                    flake8 src/ tests/ --max-line-length=100 || true
+                bat '''
+                    call venv\\Scripts\\activate.bat
+                    flake8 src/ tests/ --max-line-length=100 --format=pylint > flake8.log || exit 0
                 '''
             }
         }
