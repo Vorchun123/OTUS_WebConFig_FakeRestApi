@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Установка зависимостей...'
                 bat '''
-                    python -m venv venv
+                    C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv
                     call venv\\Scripts\\activate.bat
                     pip install -r requirements.txt
                     pip install pytest pytest-cov allure-pytest flake8
