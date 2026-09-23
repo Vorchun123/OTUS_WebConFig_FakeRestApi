@@ -35,7 +35,8 @@ pipeline {
                 echo 'Проверка качества кода...'
                 bat '''
                     call venv\\Scripts\\activate.bat
-                    flake8 src/ tests/ --max-line-length=100 --format=pylint > flake8.log || exit 0
+                    if exist flake8.log del flake8.log
+                    flake8 backend frontend --max-line-length=100 --format=pylint > flake8.log || exit 0
                 '''
             }
         }
