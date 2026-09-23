@@ -1,13 +1,16 @@
 import pytest
+import allure
 
 
 @pytest.mark.api
+@allure.title('Проверяем общее количество книг')
 def test_get_books(books_client):
     result = books_client.get_books()
     assert len(result) == 200
 
 
 @pytest.mark.api
+@allure.title('Проверяем информацию о книге по id')
 @pytest.mark.parametrize('book_id, title, page_count',
                          [(45, 'Book 45', 4500),
                           (163, 'Book 163', 16300)])
@@ -19,6 +22,7 @@ def test_get_book_by_id(books_client, book_id, title, page_count):
 
 
 @pytest.mark.api
+@allure.title('Добавляем новую книгу')
 @pytest.mark.parametrize('book_id, title, description, page_count, excerpt, publish_date',
                          [(345, 'New book', 'a story about nothing', 258, 'nothing nothing nothing',
                            '2026-12-01T00:12:45'),
@@ -33,6 +37,7 @@ def test_create_book(books_client, book_id, title, description, page_count, exce
 
 
 @pytest.mark.api
+@allure.title('Меняем параметры книги')
 @pytest.mark.parametrize('book_id, title, description, page_count, excerpt, publish_date',
                          [(145, 'New book', 'a story about nothing', 28, 'nothing nothing nothing',
                            '2026-12-01T00:12:45'),
@@ -47,6 +52,7 @@ def test_change_book(books_client, book_id, title, description, page_count, exce
 
 
 @pytest.mark.api
+@allure.title('Удаляем книгу')
 @pytest.mark.parametrize('book_id', [54, 193])
 def test_delete_book(books_client, book_id):
     result = books_client.delete_book(book_id)

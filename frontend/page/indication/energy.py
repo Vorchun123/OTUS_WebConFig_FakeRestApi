@@ -4,11 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import allure
 
-COM_PORT = 'COM26'
-CLIENT_ADDRESS = 48
-SERVER_ADDRESS = 145
-PASSWORD = '0000000100000001'
-
 
 class Energy(ConnectionPageElectricityMeter):
     BUTTON_SIDEBAR_INDICATIONS = (By.ID, 'indications-link')

@@ -2,30 +2,30 @@ import requests
 
 
 class BaseMethod:
-    def method_get(self, url):
-        response = requests.get(url)
-        response.raise_for_status()
-        result = response.json()
-        return result
+    Base_URL = 'https://fakerestapi.azurewebsites.net/api/v1/'
 
-    def method_get_with_id(self, url, id):
-        response = requests.get(f'{url}/{id}')
-        response.raise_for_status()
-        result = response.json()
-        return result
+    def __init__(self, base_url=Base_URL):
+        self.base_url = base_url
 
-    def method_post(self, url, body):
-        response = requests.post(url, json=body)
+    def request(self, method, endpoint, body=None):
+        url = f'{self.base_url}{endpoint}'
+        response = requests.request(method, url, json=body)
         response.raise_for_status()
-        result = response.json()
-        return result
+        if not response.content:
+            return None
+        try:
+            return response.json()
+        except ValueError:
+            return response.text
 
-    def method_put(self, url, body, id):
-        response = requests.put(f'{url}/{id}', json=body)
-        response.raise_for_status()
-        result = response.json()
-        return result
+    def method_get(self, endpoint):
+        return self.request('GET', endpoint)
 
-    def method_delete(self, url, id):
-        response = requests.delete(f'{url}/{id}')
-        response.raise_for_status()
+    def method_post(self,endpoint, body):
+        return self.request('POST', endpoint, body)
+
+    def method_put(self, endpoint, body):
+        return self.request('PUT', endpoint, body)
+
+    def method_delete(self, endpoint):
+        return self.request('DELETE', endpoint)

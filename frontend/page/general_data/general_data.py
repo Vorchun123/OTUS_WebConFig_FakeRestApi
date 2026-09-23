@@ -4,11 +4,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import allure
 
-COM_PORT = 'COM26'
-CLIENT_ADDRESS = 48
-SERVER_ADDRESS = 145
-PASSWORD = '0000000100000001'
-
 
 class General(ConnectionPageElectricityMeter):
     BUTTON_SAVE_DATA = (By.ID, 'readAllObjectModelButton')
@@ -34,25 +29,32 @@ class General(ConnectionPageElectricityMeter):
     PROTOCOL_EXTENDED_SPODES_VERSION = (By.ID, 'ProtocolExtendedVersion')
     SWITCHING_SCHEME = (By.ID, 'SwitchingScheme')
 
+    @allure.step('Переходим на страницу "Общие данные"')
     def load_page_url(self):
         self.visit_page(f'http://localhost:5004/{self.get_meter_id()}/general_data')
 
+    @allure.step('Обновляем страницу и ждем появлении кнопки "Сохранить"')
     def refresh_page_and_wait_button(self):
         self.refresh()
         WebDriverWait(self.browser, 10).until(EC.visibility_of_element_located(self.BUTTON_SAVE_DATA))
 
-    def save_data(self):
+    @allure.step('Нажимаем кнопку "Сохранить"')
+    def click_button_save_data(self):
         self.click(*self.BUTTON_SAVE_DATA)
 
+    @allure.step('Получаем наименование ПУ')
     def get_meter_type(self):
         return self.get_text(*self.METER_TYPE)
 
+    @allure.step('Получаем паспортное наименование ПУ')
     def get_passport_meter_type(self):
         return self.get_text(*self.PASSPORT_METER_TYPE)
 
-    def read_passport_data(self):
+    @allure.step('Нажимаем на кнопку "Считать паспортные данные"')
+    def click_button_read_passport_data(self):
         self.click(*self.BUTTON_READ_PASSPORT_DATA)
 
+    @allure.step('Получаем все паспортные данные')
     def get_all_passport_data(self):
         return self.get_text(*self.ALL_PASSPORT_DATA)
 

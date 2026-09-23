@@ -26,7 +26,7 @@ def test_refresh_page(browser, connection_electricity_meter, com_port):
 def test_read_passport_data(browser, connection_electricity_meter, com_port):
     general_data = General(browser)
     general_data.load_page_url()
-    general_data.read_passport_data()
+    general_data.click_button_read_passport_data()
     connection_electricity_meter.wait_status("Чтение профиля общих данных завершено")
     all_data = general_data.get_all_passport_data()
     assert 'Максимальный ток' in all_data

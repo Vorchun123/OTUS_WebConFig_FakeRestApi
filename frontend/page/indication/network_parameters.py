@@ -7,10 +7,6 @@ import allure
 import pandas as pd
 from pathlib import Path
 
-CLIENT_ADDRESS = 48
-SERVER_ADDRESS = 145
-PASSWORD = '0000000100000001'
-
 
 class NetworkParameters(BasePage):
     BUTTON_SIDEBAR_INDICATIONS = (By.ID, 'indications-link')
@@ -37,6 +33,7 @@ class NetworkParameters(BasePage):
     def load_page_url(self):
         self.visit_page(f'http://localhost:5004/{self.get_meter_id()}/network_settings')
 
+    @allure.step('Получаем серийный номер ПУ')
     def serial_meter_number(self):
         return self.get_text(*self.SERIAL_NUMBER)
 
@@ -89,7 +86,6 @@ class NetworkParameters(BasePage):
             pass
         return result
 
-    @allure.tag('single-phase')
     @allure.step('Формируем данные на основе xlsx  файла')
     def read_xlsx_network_parameters(self, serial_meter_number):
         directory_path = Path.home() / 'Documents' / 'webconfig-user-data'
