@@ -54,6 +54,7 @@ def read_csv_energy(file_name):
     return data_csv
 
 
+@allure.step('Сравниваем сформированные файлы тарифов')
 def comparing_values_tariff(value_1, value_2):
     for tariff in value_1.keys():
         with allure.step(f'Проверка {tariff}'):
@@ -73,6 +74,7 @@ def comparing_values_tariff(value_1, value_2):
                         print(f'Остальные тарифы, начиная с {tariff} отсутствует на ПУ')
 
 
+@allure.step('Сравниваем сформированные файлы')
 def comparing_values(value_1, value_2):
     for key in value_1.keys():
         try:

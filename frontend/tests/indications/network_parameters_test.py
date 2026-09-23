@@ -1,8 +1,10 @@
 from frontend.methods.user_data import file_search_without_data, comparing_values
 from frontend.page.indication.network_parameters import NetworkParameters
 import allure
+import pytest
 
 
+@pytest.mark.ui
 @allure.tag('functional')
 @allure.title('Проверяем сохранение параметров сети без данных')
 def test_save_measurement_table_without_data(browser, connection_electricity_meter, com_port):
@@ -12,6 +14,7 @@ def test_save_measurement_table_without_data(browser, connection_electricity_met
     connection_electricity_meter.wait_status('Отсутствуют корректные данные для сохранения')
 
 
+@pytest.mark.ui
 @allure.tag('smoke')
 @allure.title('Проверяем обновление данных параметров сети')
 def test_read_measurement_table(browser, connection_electricity_meter, com_port):
@@ -21,6 +24,7 @@ def test_read_measurement_table(browser, connection_electricity_meter, com_port)
     connection_electricity_meter.checking_status('Обновление параметров сети завершено')
 
 
+@pytest.mark.ui
 @allure.tag('smoke')
 @allure.title('Проверяем сохранение данных параметров сети')
 def test_save_measurement_table(browser, connection_electricity_meter, com_port):
@@ -32,6 +36,7 @@ def test_save_measurement_table(browser, connection_electricity_meter, com_port)
     file_search_without_data('^Параметры сети')
 
 
+@pytest.mark.ui
 @allure.tag('single-phase')
 @allure.title('Проверяем актуальность данных отображаемых в xlsx')
 def test_read_data_in_xlsx(browser, connection_electricity_meter, com_port):

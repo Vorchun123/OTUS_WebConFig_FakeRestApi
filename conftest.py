@@ -56,6 +56,7 @@ def browser(request):
     if browser_name == 'chrome':
         if headless:
             chrome_options.add_argument('headless')
+        chrome_options.add_argument('--no-sandbox')
         browser = webdriver.Chrome(options=chrome_options)
     elif browser_name == 'edge':
         browser = webdriver.Edge()
@@ -65,7 +66,7 @@ def browser(request):
         raise ValueError(f'Браузер {browser_name} не поддерживается')
 
     browser.implicitly_wait(2)
-    browser.set_window_size(1680, 1050)
+    browser.set_window_size(1600, 900)
 
     browser.log_level = log_level
     browser.logger = logger
