@@ -15,6 +15,7 @@ pipeline {
         }
         stage('API Tests') {
             steps {
+                echo 'Запуск API тестов'
                 bat '''
                     call venv\\Scripts\\activate.bat
                     pytest -m api --alluredir=allure-results
@@ -23,6 +24,7 @@ pipeline {
         }
         stage('UI Tests') {
             steps {
+                echo 'Запуск UI тестов'
                 bat '''
                     call venv\\Scripts\\activate.bat
                     pytest -m ui --headless --alluredir=allure-results
