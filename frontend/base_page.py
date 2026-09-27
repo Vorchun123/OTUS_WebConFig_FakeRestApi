@@ -105,7 +105,7 @@ class BasePage:
         return len(self.browser.find_elements(*locator))
 
     def refresh(self):
-        self.local_log(f'Refresh page')
+        self.local_log('Refresh page')
         self.browser.refresh()
 
     def checking_text(self, *locator, expected_value):

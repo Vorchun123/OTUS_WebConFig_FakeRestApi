@@ -21,7 +21,7 @@ class BaseMethod:
     def method_get(self, endpoint):
         return self.request('GET', endpoint)
 
-    def method_post(self,endpoint, body):
+    def method_post(self, endpoint, body):
         return self.request('POST', endpoint, body)
 
     def method_put(self, endpoint, body):

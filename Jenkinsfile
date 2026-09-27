@@ -15,6 +15,7 @@ pipeline {
         }
         stage('API Tests') {
             steps {
+                echo 'Запуск API тестов'
                 bat '''
                     call venv\\Scripts\\activate.bat
                     pytest -m api --alluredir=allure-results
@@ -23,6 +24,7 @@ pipeline {
         }
         stage('UI Tests') {
             steps {
+                echo 'Запуск UI тестов'
                 bat '''
                     call venv\\Scripts\\activate.bat
                     pytest -m ui --headless --alluredir=allure-results
@@ -35,7 +37,8 @@ pipeline {
                 echo 'Проверка качества кода...'
                 bat '''
                     call venv\\Scripts\\activate.bat
-                    flake8 src/ tests/ --max-line-length=100 --format=pylint > flake8.log || exit 0
+                    if exist flake8.log del flake8.log
+                    flake8 backend frontend --max-line-length=100 --format=pylint > flake8.log || exit 0
                 '''
             }
         }
